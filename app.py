@@ -7,11 +7,10 @@ app = Flask(__name__)
 @app.route('/registrations/<student_id>')
 def registrations(student_id):
      course_names=execute_query(f"""
-     SELECT name FROM courses WHERE id IN 
+     SELECT students.name FROM students WHERE students.id={student_id} UNION SELECT name from courses WHERE courses.id IN 
           (SELECT course_id FROM students_courses WHERE student_id={student_id})"""
      )
-     student_name=execute_query(f"SELECT name FROM students WHERE id = {student_id}")
-     return render_template("registrations.html", courses=course_names, student=student_name)
+     return render_template("registrations.html", courses=course_names)
 
 @app.route('/register/<student_id>/<course_id>')
 def register(student_id, course_id):

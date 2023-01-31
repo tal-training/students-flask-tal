@@ -16,6 +16,7 @@ def registrations(student_id):
 def register(student_id, course_id):
      try:
           execute_query(f"INSERT INTO students_courses (student_id, course_id) VALUES ('{student_id}', '{course_id}')")
+          # SELECT courses.name, courses.id from courses JOIN students_courses on students_courses.course_id=courses.id where students_courses.student_id=1
      except IntegrityError:
           return "student is already registered to this course"
      return redirect(url_for('registrations', student_id=student_id))
